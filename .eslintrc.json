@@ -1,0 +1,17 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"plugins": [
+	],
+	"extends": [
+		"eslint:recommended"
+	],
+	"rules": {
+		"indent": [ "error", "tab" ],
+		"semi": [ "error", "always" ]
+	}
+}

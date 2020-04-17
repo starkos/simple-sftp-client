@@ -1,0 +1,14 @@
+{
+	"name": "simple-sftp-passthru",
+	"version": "1.0.0",
+	"description": "AWS Lambda service to interact with an SFTP server",
+	"private": true,
+	"scripts": {
+		"start": "node index.js"
+	},
+	"license": "MIT",
+	"devDependencies": {},
+	"dependencies": {
+		"ssh2-sftp-client": "^5.1.2"
+	}
+}
