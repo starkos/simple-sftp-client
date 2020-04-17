@@ -1,7 +1,10 @@
 {
-  "name": "root",
-  "private": true,
-  "devDependencies": {
-    "eslint": "^6.8.0"
-  }
+	"name": "root",
+	"private": true,
+	"scripts": {
+		"deploy-all": "node scripts/deploy.js"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0"
+	}
 }
