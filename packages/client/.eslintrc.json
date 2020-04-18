@@ -1,0 +1,17 @@
+{
+	"plugins": [
+		"react",
+		"react-hooks",
+		"@typescript-eslint"
+	],
+	"extends": [
+		"../../.eslintrc.json",
+		"plugin:react/recommended",
+		"plugin:react-hooks/recommended"
+	],
+	"settings": {
+		"react": {
+			"version": "latest"
+		}
+	}
+}
