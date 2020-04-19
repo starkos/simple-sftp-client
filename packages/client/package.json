@@ -29,6 +29,7 @@
 		"mini-css-extract-plugin": "^0.9.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"serverless": "^1.67.3",
 		"ts-jest": "^25.4.0",
 		"ts-loader": "^6.2.2",
 		"typescript": "^3.8.3",
@@ -38,6 +39,7 @@
 		"webpack-merge": "^4.2.2"
 	},
 	"dependencies": {
+		"aws-sdk": "^2.658.0",
 		"react-bootstrap": "^1.0.0"
 	}
 }

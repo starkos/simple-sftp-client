@@ -2,6 +2,7 @@
 	"root": true,
 	"env": {
 		"browser": true,
+		"es6": true,
 		"node": true
 	},
 	"plugins": [
@@ -21,7 +22,10 @@
 			"extends": [
 				"plugin:@typescript-eslint/eslint-recommended",
 				"plugin:@typescript-eslint/recommended"
-			]
+			],
+			"rules": {
+				"@typescript-eslint/no-explicit-any": "off"
+			}
 		},
 		{
 			"files": [ "*.tsx" ],
