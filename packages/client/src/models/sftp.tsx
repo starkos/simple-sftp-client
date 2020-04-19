@@ -9,9 +9,11 @@ const lambdaFunctionName = 'simple-sftp-dev-service';
 
 export class SftpFile
 {
+	type: string;
 	name: string;
 
 	constructor(fileName: string) {
+		this.type = 'f';
 		this.name = fileName;
 	}
 }
@@ -43,10 +45,10 @@ export class Sftp
 	}
 
 
-	static async ls(): Promise<File[]> {
+	static async ls(path: string): Promise<File[]> {
 		const payload = JSON.stringify({
 			command: 'list',
-			path: '/'
+			path: path
 		});
 		const response = await Sftp.call(payload);
 		return response;
