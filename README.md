@@ -1,35 +1,64 @@
 # simple-sftp-client
 
-A simple SFTP pass-through service and React-based client proof-of-concept.
+A simple proof-of-concept SFTP web client which uses an AWS Lambda service to control a remote SFTP server.
 
-Some folks we work with aren't comfortable using old-school SFTP applications like [FileZilla](https://filezilla-project.org); some can't easily install applications in their work environments.
-This weekend proof-of-concept demonstrates using a minimal web application to navigate large filesets, sidestepping both issues.
+I ran into a case where we needed to share a lot of files with clients via SFTP, but some of them were uncomfortable installing and using old-school SFTP applications like [FileZilla](https://filezilla-project.org). Others were simply not allowed to install any applications into their work environments. I threw this together over a weekend to see if a web front-end over an existing SFTP server might be feasible.
 
-The project is setup as a monorepo with two projects: a web front-end to navigate and interact with the fileset, and a backend service which handles communication with the SFTP server, passing the results through to the web client.
+The project is structured as a monorepo with two projects: a web client to navigate and interact with the fileset, and a backend service which handles communication with the SFTP server, receiving commands from the client and passing the results back.
 
 I use...
 
 - [Lerna](https://lerna.js.org) to manage the monorepo
+- [Serverless](https://serverless.com) to manage deployments
 - [TypeScript](https://www.typescriptlang.org) for both components
 - [React](https://reactjs.org) for the web client
 - [Jest](https://jestjs.io) for testing (but since I blasted this out in a weekend there aren't many)
 
-## Building
+## Setup
+
+Before deploying, create an IAM policy allowing invoke access to the Lambda functions. We'll allow anyone to call our function, but they will have to provide valid credentials for the target SFTP server in order to actually do anything useful with it.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "SimpleSftpClient",
+            "Effect": "Allow",
+            "Action": "lambda:InvokeFunction",
+            "Resource": "arn:aws:lambda:*:*:function:simple-sftp-*-service"
+        }
+    ]
+}
+```
+
+Then create an IAM user with **Programmatic access**. Assign the above IAM policy to it, and note the access key and secret.
+
+Finally, create a new, untracked file named `.env` at the project root and set the variables below to configure your deploy. These will be stored as environment variables for the Lambda service.
+
+```
+SFTP_HOST_ADDR = <your SFTP host's address>
+SFTP_AWS_KEY = <the AWS user access key from above>
+SFTP_AWS_SECRET = <the AWS user access secret from above>
+```
+
+## Build & Deploy
+
+To build, test, and deploy the project:
 
 ```sh
 # Initialize the project
 $ npm install
 $ npx lerna bootstrap
 
-# Test
+# Run unit tests
 $ npx lerna run test
 
-# Run for development
-$ npx lerna run start
-
-# Build for deployment
-$ npx lerna run build
-
-# Deploying
-
+# Deploy
+$ npx lerna run deploy # dev build is default
+$ npx lerna run deploy -- -- --stage prod
 ```
+
+## Notes
+
+- The client invokes the Lambda service directly rather then using AWS API Gateway, because API Gateway is relatively expensive

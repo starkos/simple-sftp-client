@@ -1,0 +1,24 @@
+service: simple-sftp
+
+custom:
+  dotenv:
+    basePath: ../../
+  webpack:
+    includeModules: true
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-webpack
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${env:SFTP_AWS_REGION}
+  versionFunctions: false
+
+functions:
+  service:
+    handler: src/index.handler
