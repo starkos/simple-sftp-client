@@ -4,7 +4,7 @@ A simple proof-of-concept SFTP web client which uses an AWS Lambda service to co
 
 I ran into a case where we needed to share a lot of files with clients via SFTP, but some of them were uncomfortable installing and using old-school SFTP applications like [FileZilla](https://filezilla-project.org). Others were simply not allowed to install any applications into their work environments. I threw this together over a weekend to see if a web front-end over an existing SFTP server might be feasible.
 
-The project is structured as a monorepo with two projects: a web client to navigate and interact with the fileset, and a backend service which handles communication with the SFTP server, receiving commands from the client and passing the results back.
+The project is structured as a monorepo with two projects: a web client to navigate and interact with the filesets, and a backend service to mediate communication between the client and SFTP server.
 
 I use...
 

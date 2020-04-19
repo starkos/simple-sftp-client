@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
-import { FileList } from './components/FileList';
+import { App } from './containers/App';
 
 ReactDom.render(
-	<FileList />,
+	<App />,
 	document.getElementById('root')
 );
