@@ -18,7 +18,6 @@ export const SftpNavigator  = () => {
 	};
 
 	const onFileClick = (file: SftpFile) => {
-		console.log(JSON.stringify(file));
 		setCwd(path.join(cwd, file.name));
 	};
 

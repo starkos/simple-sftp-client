@@ -1,4 +1,5 @@
 import { Handler } from 'aws-lambda';
+import * as pako from 'pako';
 import * as Client from 'ssh2-sftp-client';
 
 const config = {
@@ -19,7 +20,10 @@ export const handler: Handler =  async function(event: any): Promise<any> {
 					return sftp.list(event.path);
 				})
 				.then(files => {
-					resolve(files);
+					const json = JSON.stringify(files);
+					const deflated = pako.deflate(json, { to: 'string' });
+					const encoded = Buffer.from(deflated).toString('base64');
+					resolve(encoded);
 					sftp.end();
 				})
 				.catch(err => {

@@ -1,4 +1,5 @@
 import * as Aws from 'aws-sdk';
+import * as pako from 'pako';
 
 const lambda = new Aws.Lambda({
 	apiVersion: '2015-03-31',
@@ -32,13 +33,14 @@ export class Sftp
 					reject(err.message);
 				} else if (!data.Payload) {
 					reject('No data received');
-				} else {
+				} else if (data.FunctionError) {
 					const payload = JSON.parse(data.Payload.toString());
-					if (data.FunctionError) {
-						reject(payload.errorMessage ?? 'Unknown error');
-					} else {
-						resolve(payload);
-					}
+					reject(payload.errorMessage ?? 'Unknown error');
+				} else {
+					const payload = JSON.parse(data.Payload as string) as string;
+					const decoded = Buffer.from(payload, 'base64').toString('utf8');
+					const inflated = pako.inflate(decoded, { to: 'string' });
+					resolve(JSON.parse(inflated));
 				}
 			});
 		});
